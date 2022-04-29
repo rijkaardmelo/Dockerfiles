@@ -1,4 +1,3 @@
-# syntax=docker/dockerfile:1
 FROM debian:buster
 
 RUN apt update && apt install gnupg -y && apt install wget -y
