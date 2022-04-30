@@ -1,0 +1,47 @@
+version: '3.9'
+
+services:
+  postgresql:
+    build: ./Postgresql
+    image: postgresql
+    container_name: postgresql
+    hostname: postgresq
+    stdin_open: true
+    #restart: always
+    networks:
+      int:
+        ipv4_address: 10.10.0.2
+    ports:
+      - '5432:5432'
+
+  dns:
+    build: ./Bind9
+    image: bind9
+    container_name: bind9
+    hostname: bind9
+    stdin_open: true
+    restart: always
+    networks:
+      int:
+        ipv4_address: 10.10.0.3
+    ports:
+      - '530:53'
+
+networks:
+  int:
+    name: interno
+    driver: bridge
+    #driver_opts:
+      #parent: wlo1
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.10.0.0/24  
+          gateway: 10.10.0.1
+  # ext:
+  #   external:
+  #     name: ext
+
+volumes:
+  django:
+    name: django

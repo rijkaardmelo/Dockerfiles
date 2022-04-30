@@ -1,8 +1,6 @@
 # Imagem de instalação 
 FROM debian:buster
 
-RUN useradd -u 123456 administrador
-
 # Adicionando o postgresql no repositório
 RUN apt update && apt upgrade -y
 
@@ -52,11 +50,19 @@ RUN echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/9.3/main/pg_hba.co
 # And add ``listen_addresses`` to ``/etc/postgresql/9.3/main/postgresql.conf``
 RUN echo "listen_addresses='*'" >> /etc/postgresql/9.3/main/postgresql.conf
 
+COPY postgresql.sh /sbin/postgresql.sh
+
+USER root
+
+RUN chmod 755 /sbin/postgresql.sh
+
 # Liberando a porta do serviço do postgresql, 5432
 EXPOSE 5432
 
 # Criando um volume de backup das configurações, logs e do banco de dados
 VOLUME  ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]
+
+ENTRYPOINT [ "/sbin/postgresql.sh" ]
 
 # Set the default command to run when starting the container
 # CMD ["/usr/lib/postgresql/9.3/bin/postgres", "-D", "/var/lib/postgresql/9.3/main", "-c", "config_file=/etc/postgresql/9.3/main/postgresql.conf"]

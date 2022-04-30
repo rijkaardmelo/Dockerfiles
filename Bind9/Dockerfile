@@ -9,7 +9,9 @@ RUN apt update
 RUN apt install -y vim nano bind9 bind9utils bind9-doc
 
 #Inicializando o serviço do bind9
-RUN /etc/init.d/bind9 start
+COPY bind9.sh /sbin/bind9.sh
+
+RUN chmod 755 /sbin/bind9.sh
 
 #Exporta porta de acesso 53
 EXPOSE 53
@@ -17,4 +19,6 @@ EXPOSE 53
 #Criando um volume para está pasta de configuração do bind9
 VOLUME  ["/etc/bind"]
 
-CMD ["/usr/sbin/named", "-g", "-c", "/etc/bind/named.conf", "-u", "bind"]
+ENTRYPOINT bind9.sh
+
+# CMD ["/usr/sbin/named", "-g", "-c", "/etc/bind/named.conf", "-u", "bind"]
