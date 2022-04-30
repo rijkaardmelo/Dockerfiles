@@ -6,8 +6,7 @@ services:
     image: postgresql
     container_name: postgresql
     hostname: postgresq
-    stdin_open: true
-    #restart: always
+    restart: always
     networks:
       int:
         ipv4_address: 10.10.0.2

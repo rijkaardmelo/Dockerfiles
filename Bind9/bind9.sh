@@ -2,7 +2,4 @@
 
 /etc/init.d/bind9 start
 
-while :; do
-    echo "DNS rodando ..."
-    sleep 5
-done
+tail -f /var/log/bind9/bind9.log

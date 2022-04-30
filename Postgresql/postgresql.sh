@@ -2,7 +2,4 @@
 
 /etc/init.d/postgresql start
 
-while :; do
-    echo "PostgreSQL rodando ..."
-    sleep 5
-done
+tail -f /var/log/postgresql/postgresql-9.3-main.log

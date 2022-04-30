@@ -11,7 +11,9 @@ RUN apt install -y vim nano bind9 bind9utils bind9-doc
 #Inicializando o serviço do bind9
 COPY bind9.sh /sbin/bind9.sh
 
-RUN chmod 755 /sbin/bind9.sh
+COPY bind9.log /var/log/bind9/bind9.log
+
+RUN chmod 755 /sbin/bind9.sh /var/log/bind9/bind9.log
 
 #Exporta porta de acesso 53
 EXPOSE 53
