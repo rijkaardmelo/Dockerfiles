@@ -18,8 +18,9 @@ services:
     image: bind9
     container_name: bind9
     hostname: bind9
-    stdin_open: true
     restart: always
+    volumes:
+      - dns:/etc/bind
     networks:
       int:
         ipv4_address: 10.10.0.3
@@ -42,5 +43,5 @@ networks:
   #     name: ext
 
 volumes:
-  django:
-    name: django
+  dns:
+    name: dns
