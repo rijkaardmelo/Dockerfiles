@@ -10,16 +10,8 @@ echo "root:root" | chpasswd
 
 passwd --expire root
 
-chmod 755 /etc/bind/named.conf.log
-
-mkdir /var/log/bind/
-
-cat > /var/log/bind/bind.log
-
-chown bind:bind /var/log/bind/
-
-/etc/init.d/bind9 start
+service postgresql start
 
 service ssh start
 
-tail -f /var/log/bind/bind.log
+tail -f /var/log/postgresql/postgresql-9.3-main.log
