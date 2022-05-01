@@ -2,7 +2,7 @@ FROM debian:buster
 
 RUN apt update && apt upgrade -y && apt dist-upgrade -y && apt autoremove -y
 
-RUN apt install -y gnupg wget openssh-server
+RUN apt install -y gnupg wget vim nano openssh-server
 
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 
