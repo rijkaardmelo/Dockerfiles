@@ -20,12 +20,13 @@ services:
     hostname: bind9
     restart: always
     volumes:
-      - dns:/etc/bind
+      - /home/admrijkaard/bind:/etc/bind
     networks:
       int:
         ipv4_address: 10.10.0.3
     ports:
       - '530:53'
+      - '22:22'
 
 networks:
   int:
@@ -39,7 +40,7 @@ networks:
         - subnet: 10.10.0.0/24  
           gateway: 10.10.0.1
   # ext:
-  #   external:
+  #   external
   #     name: ext
 
 volumes:
