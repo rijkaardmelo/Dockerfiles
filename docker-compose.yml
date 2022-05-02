@@ -20,7 +20,7 @@ services:
     hostname: bind9
     restart: always
     volumes:
-      - /home/admrijkaard/bind:/etc/bind
+      - /etc/bind:/etc/bind
     networks:
       int:
         ipv4_address: 10.10.0.3
@@ -46,3 +46,4 @@ networks:
 volumes:
   dns:
     name: dns
+    external: true
