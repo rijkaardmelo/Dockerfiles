@@ -18,9 +18,10 @@ services:
     image: bind9
     container_name: bind9
     hostname: bind9
+    # stdin_open: true
     restart: always
     volumes:
-      - /etc/bind:/etc/bind
+      - dns:/etc/bind
     networks:
       int:
         ipv4_address: 10.10.0.3
@@ -46,4 +47,3 @@ networks:
 volumes:
   dns:
     name: dns
-    external: true

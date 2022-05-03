@@ -12,8 +12,10 @@ COPY named.conf.log /etc/bind
 
 RUN chmod 755 entrypoint.sh config.sh
 
-RUN ./config.sh
+RUN /config.sh
 
 EXPOSE 53 22
+
+VOLUME [ "/etc/bind" ]
 
 ENTRYPOINT ["/entrypoint.sh"]
