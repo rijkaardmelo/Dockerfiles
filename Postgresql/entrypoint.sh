@@ -1,17 +1,7 @@
 #!/bin/bash
 
-useradd -m administrador
+/etc/init.d/postgresql start
 
-echo "administrador:administrador" | chpasswd
+/etc/init.d/ssh start
 
-passwd --expire administrador
-
-echo "root:root" | chpasswd
-
-passwd --expire root
-
-service postgresql start
-
-service ssh start
-
-tail -f /var/log/postgresql/postgresql-9.3-main.log
+tail -f /var/log/postgresql/postgresql-${VERSION_POSTGRESQL}-main.log

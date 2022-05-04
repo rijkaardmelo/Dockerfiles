@@ -5,13 +5,16 @@ services:
     build: ./Postgresql
     image: postgresql
     container_name: postgresql
-    hostname: postgresq
+    hostname: postgresql
     restart: always
+    environment:
+      - VERSION_POSTGRESQL=9.3
     networks:
       int:
         ipv4_address: 10.10.0.2
     ports:
       - '5432:5432'
+      - '22:22'
 
   dns:
     build: ./Bind9
