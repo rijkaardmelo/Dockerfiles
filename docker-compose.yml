@@ -7,10 +7,11 @@ services:
     hostname: nginx
     restart: always
     networks:
-      srv:
+      ext:
         ipv4_address: 10.200.80.3
     ports:
       - '80:80'
+
   postgresql:
     build: ./Postgresql
     image: postgresql
@@ -36,7 +37,7 @@ services:
     volumes:
       - dns:/etc/bind
     networks:
-      srv:
+      ext:
         ipv4_address: 10.200.80.1
     ports:
       - '53:53'
@@ -46,26 +47,22 @@ networks:
   int:
     name: interno
     driver: bridge
-    #driver_opts:
-      #parent: wlo1
     ipam:
       driver: default
       config:
         - subnet: 10.10.0.0/24  
           gateway: 10.10.0.1
   
-  srv:
-    name: srv
+  ext:
+    name: ext
     driver: ipvlan
     driver_opts:
       parent: enp2s0
     ipam:
+      driver: default
       config:
         - subnet: 10.200.0.0/16  
           gateway: 10.200.1.251
-  # ext:
-  #   external
-  #     name: ext
 
 volumes:
   dns:
