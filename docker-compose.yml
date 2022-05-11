@@ -1,6 +1,16 @@
 version: '3.9'
 
 services:
+  web:
+    image: nginx
+    container_name: nginx
+    hostname: nginx
+    restart: always
+    networks:
+      srv:
+        ipv4_address: 10.200.80.3
+    ports:
+      - '80:80'
   postgresql:
     build: ./Postgresql
     image: postgresql
@@ -26,10 +36,10 @@ services:
     volumes:
       - dns:/etc/bind
     networks:
-      int:
-        ipv4_address: 10.10.0.3
+      srv:
+        ipv4_address: 10.200.80.1
     ports:
-      - '530:53'
+      - '53:53'
       - '22:22'
 
 networks:
@@ -43,6 +53,16 @@ networks:
       config:
         - subnet: 10.10.0.0/24  
           gateway: 10.10.0.1
+  
+  srv:
+    name: srv
+    driver: ipvlan
+    driver_opts:
+      parent: enp2s0
+    ipam:
+      config:
+        - subnet: 10.200.0.0/16  
+          gateway: 10.200.1.251
   # ext:
   #   external
   #     name: ext
