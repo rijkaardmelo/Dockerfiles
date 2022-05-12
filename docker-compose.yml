@@ -8,7 +8,7 @@ services:
     restart: always
     networks:
       ext:
-        ipv4_address: 10.200.80.3
+        ipv4_address: 10.200.90.3
     ports:
       - '80:80'
 
@@ -18,11 +18,13 @@ services:
     container_name: postgresql
     hostname: postgresql
     restart: always
-    environment:
-      - VERSION_POSTGRESQL=9.3
+    volumes:
+      - postgresql-config:/etc/postgresql
+      - postgresql-log:/var/log/postgresql
+      - postgresql-database:/var/lib/postgresql
     networks:
-      int:
-        ipv4_address: 10.10.0.2
+      ext:
+        ipv4_address: 10.200.90.2
     ports:
       - '5432:5432'
       - '22:22'
@@ -38,7 +40,7 @@ services:
       - dns:/etc/bind
     networks:
       ext:
-        ipv4_address: 10.200.80.1
+        ipv4_address: 10.200.90.1
     ports:
       - '53:53'
       - '22:22'
@@ -54,10 +56,10 @@ networks:
           gateway: 10.10.0.1
   
   ext:
-    name: ext
+    name: externo
     driver: ipvlan
     driver_opts:
-      parent: enp2s0
+      parent: ens18
     ipam:
       driver: default
       config:
@@ -67,3 +69,10 @@ networks:
 volumes:
   dns:
     name: dns
+  postgresql-config:
+    name: postgresql-config
+  postgresql-log:
+    name: postgresql-log
+  postgresql-database:
+    name: postgresql-database
+  

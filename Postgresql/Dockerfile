@@ -4,7 +4,7 @@
 FROM debian:buster
 
 # Criando uma variavel de ambiente
-ENV VERSION_POSTGRESQL=9.3
+ENV VERSION_POSTGRESQL=9.1
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -59,7 +59,7 @@ RUN /config.sh
 EXPOSE 5432 22
 
 # Definindo os volumes no qual o docker vai reter as informações
-VOLUME  ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]
+# VOLUME  ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]
 
 # Executando os comandos que vai inicializar junto com o container, atraves do arquivo entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
