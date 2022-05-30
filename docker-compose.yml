@@ -45,6 +45,44 @@ services:
       - '53:53'
       - '22:22'
 
+  zimbra:
+    # build: ubuntu
+    image: ubuntu
+    container_name: zimbra
+    hostname: zimbra.home.lan
+    restart: always
+    networks:
+      ext:
+        ipv4_address: 10.200.90.4
+    ports:
+      - '25:25'
+      - '80:80'
+      - '110:110'
+      - '143:143'
+      - '443:443'
+      - '465:465'
+      - '587:587'
+      - '993:993'
+      - '3443:3443'
+      - '5222:5222'
+      - '5223:5523'
+      - '9071:9071'
+
+  squid:
+    build: ./Squid
+    image: squid
+    container_name: squid
+    hostname: squid
+    restart: always
+    volumes:
+      - squid:/etc/squid
+    networks:
+      ext:
+        ipv4_address: 10.200.90.5
+    ports:
+      - '3128:3128'
+      - '22:22'
+
 networks:
   int:
     name: interno
@@ -69,10 +107,11 @@ networks:
 volumes:
   dns:
     name: dns
+  squid:
+    name: squid
   postgresql-config:
     name: postgresql-config
   postgresql-log:
     name: postgresql-log
   postgresql-database:
     name: postgresql-database
-  
